@@ -29,24 +29,6 @@ public class  CreateCardActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mCardReference = FirebaseDatabase
-                .getInstance()
-                .getReference()
-                .child(Constants.FIREBASE_CHILD_CARDS);
-
-//        mCardReferenceReferenceListener = mCardReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot cardSnapshot : dataSnapshot.getChildren()) {
-//                    String card = cardSnapshot.getValue().toString();
-//                    Log.d("Interest updated", "card: " + card);
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_card);
         ButterKnife.bind(this);
@@ -61,37 +43,20 @@ public class  CreateCardActivity extends AppCompatActivity {
 
                 mFront.setText("");
                 Intent intent = new Intent(CreateCardActivity.this, DisplayCardActivity.class);
-//                intent.putExtra("cardFront", cardFront);
-//                intent.putExtra("cardBack", cardBack);
                 startActivity(intent);
             }
         });
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        mCardReference.removeEventListener(mCardReferenceReferenceListener);
-//    }
-
     private void saveToFirebase(String front, String back) {
         Card mCard = new Card(front, back);
-
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        String uid = user.getUid();
         DatabaseReference meetupRef = FirebaseDatabase
                 .getInstance()
                 .getReference(Constants.FIREBASE_CHILD_CARDS);
-//                .child(uid);
 
         DatabaseReference pushRef = meetupRef.push();
         String pushId = pushRef.getKey();
         mCard.setPushId(pushId);
         pushRef.setValue(mCard);
-
-        mCardReference.push().setValue(mCard);
     }
-
-//    TODO take input from three text fields, front, back, deck, save object to firebase
-
 }
