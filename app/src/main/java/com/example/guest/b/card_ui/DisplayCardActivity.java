@@ -6,34 +6,38 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.guest.b.Constants;
 import com.example.guest.b.R;
+import com.example.guest.b.adapters.CardPagerAdapter;
+import com.example.guest.b.models.Card;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+import butterknife.ButterKnife;
 
 public class DisplayCardActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
     private Handler mHandler = new Handler();
     private boolean mShowingBack = false;
+    private CardPagerAdapter adapterViewPager;
+    private ArrayList<Card> mCards = new ArrayList<>();
+    private int position = 0;
+
+    //@Bind(R.id.pager) ViewPager mPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_card);
-
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         if (savedInstanceState == null) {
             getFragmentManager()
@@ -44,17 +48,25 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
             mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
         }
 
-        // Monitor back stack changes to ensure the action bar shows the appropriate
-        // button (either "photo" or "info").
+        getCardsFromFirebase();
+        int startingPosition = 0;
+//        adapterViewPager = new CardPagerAdapter(getSupportFragmentManager(), mCards);
+//        mPager.setAdapter(adapterViewPager);
+//        mPager.setCurrentItem(startingPosition);
+
         getFragmentManager().addOnBackStackChangedListener(this);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.previous, menu);
+        inflater.inflate(R.menu.next, menu);
+        ButterKnife.bind(this);
+
         super.onCreateOptionsMenu(menu);
 
-        // Add either a "photo" or "finish" button to the action bar, depending on which page
-        // is currently selected.
         MenuItem item = menu.add(Menu.NONE, R.id.action_flip, Menu.NONE,
                 mShowingBack
                         ? R.string.action_photo
@@ -70,13 +82,22 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // Navigate "up" the demo structure to the launchpad activity.
-                // See http://developer.android.com/design/patterns/navigation.html for more.
+
                 NavUtils.navigateUpTo(this, new Intent(this, CreateCardActivity.class));
                 return true;
 
             case R.id.action_flip:
                 flipCard();
+                return true;
+
+            //adding actions to icons in the menu bar.
+
+            case R.id.action_previous:
+                //previousCard();
+                return true;
+
+            case R.id.action_next:
+                //nextCard();
                 return true;
         }
 
@@ -89,39 +110,18 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
             return;
         }
 
-        // Flip to the back.
-
         mShowingBack = true;
-
-        // Create and commit a new fragment transaction that adds the fragment for the back of
-        // the card, uses custom animations, and is part of the fragment manager's back stack.
 
         getFragmentManager()
                 .beginTransaction()
 
-                // Replace the default fragment animations with animator resources representing
-                // rotations when switching to the back of the card, as well as animator
-                // resources representing rotations when flipping back to the front (e.g. when
-                // the system Back button is pressed).
                 .setCustomAnimations(
                         R.animator.card_flip_right_in, R.animator.card_flip_right_out,
                         R.animator.card_flip_left_in, R.animator.card_flip_left_out)
 
-                // Replace any fragments currently in the container view with a fragment
-                // representing the next page (indicated by the just-incremented currentPage
-                // variable).
                 .replace(R.id.container, new CardBackFragment())
-
-                // Add this transaction to the back stack, allowing users to press Back
-                // to get to the front of the card.
                 .addToBackStack(null)
-
-                // Commit the transaction.
                 .commit();
-
-        // Defer an invalidation of the options menu (on modern devices, the action bar). This
-        // can't be done immediately because the transaction may not yet be committed. Commits
-        // are asynchronous in that they are posted to the main thread's message loop.
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -129,6 +129,16 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
             }
         });
     }
+
+//    private void nextCard(){
+//        mPager.setCurrentItem(getItem(+1), true);
+//
+//    }
+//
+//    private void previousCard(){
+//        mPager.setCurrentItem(getItem(-1), true);
+//
+//    }
 
     @Override
     public void onBackStackChanged() {
@@ -138,4 +148,22 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
         invalidateOptionsMenu();
     }
 
+    public void getCardsFromFirebase(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_CARDS);
+        ref.addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    mCards.add(snapshot.getValue(Card.class));
+                    Log.v("card", "snapshot: " + snapshot.getValue(Card.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
 }

@@ -7,12 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.guest.b.R;
+import com.example.guest.b.models.Card;
 
 /**
  * Created by Guest on 12/21/16.
  */
 public class CardFrontFragment extends Fragment {
     public CardFrontFragment() {
+    }
+
+    public static CardFrontFragment newInstance(Card card) {
+        CardFrontFragment meetupDetailFragment = new CardFrontFragment();
+        Bundle args = new Bundle();
+//        args.putParcelable("card", Parcels.wrap(card));
+        meetupDetailFragment.setArguments(args);
+        return meetupDetailFragment;
     }
 
     @Override
