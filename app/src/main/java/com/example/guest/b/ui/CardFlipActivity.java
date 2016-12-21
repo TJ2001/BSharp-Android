@@ -16,17 +16,25 @@ import android.view.ViewGroup;
 import com.example.guest.b.R;
 
 public class CardFlipActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
-//    private Handler mHandler = new Handler();
-    private boolean mShowingBack = false;
+    /**
+     * A handler object, used for deferring UI operations.
+     */
     private Handler mHandler = new Handler();
+
+    /**
+     * Whether or not we're showing the back of the card (otherwise showing the front).
+     */
+    private boolean mShowingBack = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_flip);
 
-
         if (savedInstanceState == null) {
+            // If there is no saved instance state, add a fragment representing the
+            // front of the card to this activity. If there is saved instance state,
+            // this fragment will have already been added to the activity.
             getFragmentManager()
                     .beginTransaction()
                     .add(R.id.container, new CardFrontFragment())
@@ -34,6 +42,9 @@ public class CardFlipActivity extends AppCompatActivity implements FragmentManag
         } else {
             mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
         }
+
+        // Monitor back stack changes to ensure the action bar shows the appropriate
+        // button (either "photo" or "info").
         getFragmentManager().addOnBackStackChangedListener(this);
     }
 
@@ -71,9 +82,6 @@ public class CardFlipActivity extends AppCompatActivity implements FragmentManag
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
     private void flipCard() {
         if (mShowingBack) {
             getFragmentManager().popBackStack();
@@ -90,13 +98,13 @@ public class CardFlipActivity extends AppCompatActivity implements FragmentManag
         getFragmentManager()
                 .beginTransaction()
 
-                // Replace the default fragment animations with anim resources representing
-                // rotations when switching to the back of the card, as well as anim
+                // Replace the default fragment animations with animator resources representing
+                // rotations when switching to the back of the card, as well as animator
                 // resources representing rotations when flipping back to the front (e.g. when
                 // the system Back button is pressed).
                 .setCustomAnimations(
-                        R.animator.card_flip_left_in, R.animator.card_flip_right_in,
-                        R.animator.card_flip_left_out, R.animator.card_flip_right_out)
+                        R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                        R.animator.card_flip_left_in, R.animator.card_flip_left_out)
 
                 // Replace any fragments currently in the container view with a fragment
                 // representing the next page (indicated by the just-incremented currentPage
@@ -129,6 +137,9 @@ public class CardFlipActivity extends AppCompatActivity implements FragmentManag
         invalidateOptionsMenu();
     }
 
+    /**
+     * A fragment representing the front of the card.
+     */
     public static class CardFrontFragment extends Fragment {
         public CardFrontFragment() {
         }
@@ -140,6 +151,9 @@ public class CardFlipActivity extends AppCompatActivity implements FragmentManag
         }
     }
 
+    /**
+     * A fragment representing the back of the card.
+     */
     public static class CardBackFragment extends Fragment {
         public CardBackFragment() {
         }
