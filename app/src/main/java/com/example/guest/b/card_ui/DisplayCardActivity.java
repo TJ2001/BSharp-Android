@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.guest.b.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class DisplayCardActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
     private Handler mHandler = new Handler();
@@ -19,6 +22,18 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_card);
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         if (savedInstanceState == null) {
             getFragmentManager()
