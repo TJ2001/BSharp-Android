@@ -55,7 +55,7 @@ public class LoadActivity extends AppCompatActivity {
                         waited += 100;
                     }
                     Intent intent = new Intent(LoadActivity.this,
-                            CreateCardActivity.class);
+                            CardFlipActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     LoadActivity.this.finish();

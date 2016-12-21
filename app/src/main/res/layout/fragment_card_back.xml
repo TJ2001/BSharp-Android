@@ -1,13 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.guest.b.ui.CardBackFragment">
+    android:orientation="vertical"
+    android:background="#a6c"
+    android:padding="16dp"
+    android:gravity="bottom">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <TextView android:id="@android:id/text1"
+        style="?android:textAppearanceLarge"
+        android:textStyle="bold"
+        android:textColor="#fff"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="card_back_title" />
 
-</FrameLayout>
+    <TextView style="?android:textAppearanceSmall"
+        android:textAllCaps="true"
+        android:textColor="#80ffffff"
+        android:textStyle="bold"
+        android:lineSpacingMultiplier="1.2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="card_back_description" />>
+
+</LinearLayout>
