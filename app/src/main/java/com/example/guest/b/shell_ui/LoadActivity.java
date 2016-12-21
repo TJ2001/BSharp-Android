@@ -10,7 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.example.guest.b.R;
-import com.example.guest.b.card_ui.CardFlipActivity;
 
 public class LoadActivity extends AppCompatActivity {
     public void onAttachedToWindow() {
@@ -56,7 +55,7 @@ public class LoadActivity extends AppCompatActivity {
                         waited += 100;
                     }
                     Intent intent = new Intent(LoadActivity.this,
-                            CardFlipActivity.class);
+                            MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     LoadActivity.this.finish();

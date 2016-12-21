@@ -1,27 +1,32 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#a6c"
-    android:padding="16dp"
     android:gravity="bottom">
 
-    <TextView android:id="@android:id/text1"
-        style="?android:textAppearanceLarge"
-        android:textStyle="bold"
-        android:textColor="#fff"
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="card_back_title" />
+        android:layout_height="match_parent"
+        android:src="@drawable/card_back"
+        android:padding="20dp"
+        android:id="@+id/backCardImage"/>
 
-    <TextView style="?android:textAppearanceSmall"
-        android:textAllCaps="true"
-        android:textColor="#80ffffff"
-        android:textStyle="bold"
-        android:lineSpacingMultiplier="1.2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="card_back_description" />>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/backCardText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:gravity="center"
+        android:text="This is the back of the card. A: I'm feeling purple today."
+        android:textColor="#000000"
+        android:layout_alignLeft="@+id/backCardImage"
+        android:layout_alignTop="@+id/backCardImage"
+        android:layout_alignRight="@+id/backCardImage"
+        android:layout_alignBottom="@+id/backCardImage"
+        android:textSize="35sp"
+        android:paddingLeft="55dp"
+        android:paddingRight="55dp"/>
+
+</RelativeLayout>

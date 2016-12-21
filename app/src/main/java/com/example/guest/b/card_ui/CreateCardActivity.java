@@ -23,6 +23,8 @@ public class  CreateCardActivity extends AppCompatActivity {
     @Bind(R.id.createCardButton) Button mCreateCardButton;
     @Bind(R.id.frontEditText) EditText mFront;
     @Bind(R.id.backEditText) EditText mBack;
+    @Bind(R.id.deckEditText) EditText mDeck;
+
 //    private ArrayList<String> cards = new ArrayList<>();
 
     public static final String TAG = CreateCardActivity.class.getSimpleName();
@@ -38,8 +40,9 @@ public class  CreateCardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String cardFront = mFront.getText().toString();
                 String cardBack = mBack.getText().toString();
+                String cardDeck = mDeck.getText().toString();
 
-                saveToFirebase(cardFront, cardBack);
+                saveToFirebase(cardDeck, cardFront, cardBack);
 
                 mFront.setText("");
                 Intent intent = new Intent(CreateCardActivity.this, DisplayCardActivity.class);
@@ -48,8 +51,8 @@ public class  CreateCardActivity extends AppCompatActivity {
         });
     }
 
-    private void saveToFirebase(String front, String back) {
-        Card mCard = new Card(front, back);
+    private void saveToFirebase(String deck, String front, String back) {
+        Card mCard = new Card(deck, front, back);
         DatabaseReference meetupRef = FirebaseDatabase
                 .getInstance()
                 .getReference(Constants.FIREBASE_CHILD_CARDS);

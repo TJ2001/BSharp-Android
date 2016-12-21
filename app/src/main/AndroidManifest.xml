@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".card_ui.CreateCardActivity" />
         <activity android:name=".card_ui.DisplayCardActivity" />
-        <activity android:name=".card_ui.CardFlipActivity"></activity>
+        <activity android:name=".shell_ui.MainActivity"></activity>
     </application>
 
 </manifest>
