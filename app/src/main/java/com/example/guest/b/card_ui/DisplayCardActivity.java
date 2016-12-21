@@ -1,4 +1,4 @@
-package com.example.guest.b.ui;
+package com.example.guest.b.card_ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

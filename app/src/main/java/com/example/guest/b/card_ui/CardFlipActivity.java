@@ -1,29 +1,20 @@
-package com.example.guest.b.ui;
+package com.example.guest.b.card_ui;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.guest.b.R;
 
 public class CardFlipActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
-    /**
-     * A handler object, used for deferring UI operations.
-     */
+//A handler object used for deferring UI operations.
     private Handler mHandler = new Handler();
-
-    /**
-     * Whether or not we're showing the back of the card (otherwise showing the front).
-     */
+//Whether or not we're showing the back of the card (otherwise showing the front).
     private boolean mShowingBack = false;
 
     @Override
@@ -32,9 +23,7 @@ public class CardFlipActivity extends AppCompatActivity implements FragmentManag
         setContentView(R.layout.activity_card_flip);
 
         if (savedInstanceState == null) {
-            // If there is no saved instance state, add a fragment representing the
-            // front of the card to this activity. If there is saved instance state,
-            // this fragment will have already been added to the activity.
+            // If no saved instance state, add front card fragment. If there is saved instance state, this fragment will have already been added.
             getFragmentManager()
                     .beginTransaction()
                     .add(R.id.container, new CardFrontFragment())
@@ -137,31 +126,4 @@ public class CardFlipActivity extends AppCompatActivity implements FragmentManag
         invalidateOptionsMenu();
     }
 
-    /**
-     * A fragment representing the front of the card.
-     */
-    public static class CardFrontFragment extends Fragment {
-        public CardFrontFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_card_front, container, false);
-        }
-    }
-
-    /**
-     * A fragment representing the back of the card.
-     */
-    public static class CardBackFragment extends Fragment {
-        public CardBackFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_card_back, container, false);
-        }
-    }
 }

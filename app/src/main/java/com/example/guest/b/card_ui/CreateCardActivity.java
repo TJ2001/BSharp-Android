@@ -1,4 +1,4 @@
-package com.example.guest.b.ui;
+package com.example.guest.b.card_ui;
 
 import android.content.Intent;
 import android.os.Bundle;

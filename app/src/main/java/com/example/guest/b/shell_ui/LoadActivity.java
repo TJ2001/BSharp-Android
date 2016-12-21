@@ -1,4 +1,4 @@
-package com.example.guest.b.ui;
+package com.example.guest.b.shell_ui;
 
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.example.guest.b.R;
+import com.example.guest.b.card_ui.CardFlipActivity;
 
 public class LoadActivity extends AppCompatActivity {
     public void onAttachedToWindow() {
