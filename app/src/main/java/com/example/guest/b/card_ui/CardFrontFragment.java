@@ -1,32 +1,43 @@
 package com.example.guest.b.card_ui;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.guest.b.R;
 import com.example.guest.b.models.Card;
 
-/**
- * Created by Guest on 12/21/16.
- */
+import org.parceler.Parcels;
+
+import butterknife.Bind;
+
 public class CardFrontFragment extends Fragment {
-    public CardFrontFragment() {
-    }
+//    private DisplayCardActivity myActivity;
+@Bind(R.id.frontCardText) TextView mFrontCardText;
+
+    private Card mCard;
 
     public static CardFrontFragment newInstance(Card card) {
-        CardFrontFragment meetupDetailFragment = new CardFrontFragment();
+        CardFrontFragment cardFrontFragment = new CardFrontFragment();
         Bundle args = new Bundle();
-//        args.putParcelable("card", Parcels.wrap(card));
-        meetupDetailFragment.setArguments(args);
-        return meetupDetailFragment;
+        args.putParcelable("restaurant", Parcels.wrap(card));
+        cardFrontFragment.setArguments(args);
+        return cardFrontFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mCard = Parcels.unwrap(getArguments().getParcelable("card"));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mFrontCardText.setText(mCard.getFront());
         return inflater.inflate(R.layout.fragment_card_front, container, false);
     }
 }

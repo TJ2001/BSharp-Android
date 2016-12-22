@@ -1,8 +1,8 @@
 package com.example.guest.b.models;
 
-/**
- * Created by Guest on 12/20/16.
- */
+import org.parceler.Parcel;
+
+@Parcel
 public class Card {
     public String deck, front, back, pushId;
 

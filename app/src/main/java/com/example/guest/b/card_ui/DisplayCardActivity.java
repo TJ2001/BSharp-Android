@@ -1,6 +1,7 @@
 package com.example.guest.b.card_ui;
 
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +14,6 @@ import android.view.MenuItem;
 
 import com.example.guest.b.Constants;
 import com.example.guest.b.R;
-import com.example.guest.b.adapters.CardPagerAdapter;
 import com.example.guest.b.models.Card;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,11 +28,11 @@ import butterknife.ButterKnife;
 public class DisplayCardActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
     private Handler mHandler = new Handler();
     private boolean mShowingBack = false;
-    private CardPagerAdapter adapterViewPager;
     private ArrayList<Card> mCards = new ArrayList<>();
     private int position = 0;
 
-    //@Bind(R.id.pager) ViewPager mPager;
+    private Card sentCard;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +40,20 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
         setContentView(R.layout.activity_display_card);
 
         if (savedInstanceState == null) {
-            getFragmentManager()
+            getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.container, new CardFrontFragment())
                     .commit();
         } else {
-            mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
+            mShowingBack = (getSupportFragmentManager().getBackStackEntryCount() > 0);
         }
 
         getCardsFromFirebase();
-        int startingPosition = 0;
-//        adapterViewPager = new CardPagerAdapter(getSupportFragmentManager(), mCards);
-//        mPager.setAdapter(adapterViewPager);
-//        mPager.setCurrentItem(startingPosition);
 
-        getFragmentManager().addOnBackStackChangedListener(this);
+
+
+
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
 
     }
 
@@ -106,13 +105,13 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
 
     private void flipCard() {
         if (mShowingBack) {
-            getFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack();
             return;
         }
 
         mShowingBack = true;
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
 
                 .setCustomAnimations(
@@ -142,7 +141,7 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
 
     @Override
     public void onBackStackChanged() {
-        mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
+        mShowingBack = (getSupportFragmentManager().getBackStackEntryCount() > 0);
 
         // When the back stack changes, invalidate the options menu (action bar).
         invalidateOptionsMenu();
@@ -166,4 +165,10 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
         });
 
     }
+
+    public Card getMyData() {
+        sentCard = mCards.get(0);
+        return sentCard;
+    }
+
 }
