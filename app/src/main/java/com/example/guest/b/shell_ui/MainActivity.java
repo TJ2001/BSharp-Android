@@ -32,6 +32,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ArrayList<Deck> mDecks = new ArrayList<>();
+    private String mDeckType;
 
     @Bind(R.id.createCardButton) Button mCreateCardButton;
     @Bind(R.id.displayCardsButton) Button mDisplayCardsButton;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        final ArrayAdapter<String> gridViewArrayAdapter = new ArrayAdapter<Deck>
 //                (this,android.R.layout.simple_list_item_1, mDecks);
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_CARDS);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_DECKS);
 
         ListAdapter adapter = new FirebaseListAdapter<Deck>(this, Deck.class, R.layout.grid_view_item, ref)
         {
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ImageView image = (ImageView)v.findViewById(R.id.imageView);
                 TextView name = (TextView)v.findViewById(R.id.Name);
 //
-                name.setText(model.getDeckType());
+                mDeckType = model.getDeckType();
+                name.setText(mDeckType);
             }
 
         };
@@ -71,7 +73,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int position, long id) {
                     Toast.makeText(MainActivity.this, "it's clickable" + position,
                         Toast.LENGTH_SHORT).show();
-               startActivity(new Intent(MainActivity.this, DisplayCardActivity.class));
+               Intent intent = new Intent(MainActivity.this, DisplayCardActivity.class);
+
+               intent.putExtra("deck", mDecks.get(position).deckType);
+               startActivity(intent);
             }
         });
 

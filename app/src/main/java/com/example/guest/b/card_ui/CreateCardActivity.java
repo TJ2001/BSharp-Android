@@ -47,6 +47,7 @@ public class  CreateCardActivity extends AppCompatActivity {
 
                 saveToFirebase(deckType, cardFront, cardBack);
                 saveToFirebase(deckType, cardFront, cardBack);
+                saveDeckToFirebase(deckType);
 
                 mFront.setText("");
                 Intent intent = new Intent(CreateCardActivity.this, MainActivity.class);
@@ -65,6 +66,18 @@ public class  CreateCardActivity extends AppCompatActivity {
         String pushId = pushRef.getKey();
         mCard.setPushId(pushId);
         pushRef.setValue(mCard);
+    }
+
+    private void saveDeckToFirebase(String deckType) {
+        Deck mDeck = new Deck(deckType);
+        DatabaseReference cardRef = FirebaseDatabase
+                .getInstance()
+                .getReference(Constants.FIREBASE_CHILD_DECKS);
+
+        DatabaseReference pushRef = cardRef.push();
+        String pushId = pushRef.getKey();
+        mDeck.setPushId(pushId);
+        pushRef.setValue(mDeck);
     }
 
 }

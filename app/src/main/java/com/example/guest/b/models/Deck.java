@@ -9,9 +9,8 @@ public class Deck {
 
     public Deck() {};
 
-    public Deck(String deckType, String pushId) {
+    public Deck(String deckType) {
         this.deckType = deckType;
-        this.pushId = pushId;
     }
 
     //    public ArrayList<Card> getSubject() {
