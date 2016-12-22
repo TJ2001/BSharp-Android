@@ -23,9 +23,21 @@
         android:layout_alignTop="@+id/frontCardImage"
         android:layout_alignRight="@+id/frontCardImage"
         android:layout_alignBottom="@+id/frontCardImage"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:paddingLeft="55dp"
         android:paddingRight="55dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Q?"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:id="@+id/textView"
+        android:textColor="#FFFFFF"
+        android:layout_alignTop="@+id/frontCardText"
+        android:layout_alignRight="@+id/frontCardText"
+        android:layout_alignEnd="@+id/frontCardText" />
 
 
 </RelativeLayout>

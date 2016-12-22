@@ -4,17 +4,17 @@ import org.parceler.Parcel;
 
 @Parcel
 public class Card {
-    public String deck, front, back, pushId;
+    public String deckType, front, back, pushId;
 
     public Card() {};
 
     public Card(String deck, String front, String back) {
-        this.deck = deck;
+        this.deckType = deck;
         this.front = front;
         this.back = back;
     }
 
-    public String getDeck() { return deck; }
+    public String getDeckType() { return deckType; }
 
     public String getFront() {
         return front;
