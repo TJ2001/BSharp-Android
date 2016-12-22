@@ -73,7 +73,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int position, long id) {
                     Toast.makeText(MainActivity.this, "it's clickable" + position,
                         Toast.LENGTH_SHORT).show();
-               startActivity(new Intent(MainActivity.this, DisplayCardActivity.class));
+               Intent intent = new Intent(MainActivity.this, DisplayCardActivity.class);
+
+               intent.putExtra("deck", mDecks.get(position).deckType);
+               startActivity(intent);
             }
         });
 
