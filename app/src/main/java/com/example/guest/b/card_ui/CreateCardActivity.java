@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.example.guest.b.Constants;
 import com.example.guest.b.R;
 import com.example.guest.b.models.Card;
+import com.example.guest.b.models.Deck;
 import com.example.guest.b.shell_ui.MainActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,7 +25,7 @@ public class  CreateCardActivity extends AppCompatActivity {
     @Bind(R.id.createCardButton) Button mCreateCardButton;
     @Bind(R.id.frontEditText) EditText mFront;
     @Bind(R.id.backEditText) EditText mBack;
-    @Bind(R.id.deckEditText) EditText mDeck;
+    @Bind(R.id.deckEditText) EditText mDeckType;
 
 //    private ArrayList<String> cards = new ArrayList<>();
 
@@ -42,10 +43,10 @@ public class  CreateCardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String cardFront = mFront.getText().toString();
                 String cardBack = mBack.getText().toString();
-                String cardDeckType = mDeck.getText().toString();
+                String deckType = mDeckType.getText().toString().toUpperCase();
 
-                saveToFirebase(cardDeck, cardFront, cardBack);
-                saveToFirebase(cardDeck, cardFront, cardBack);
+                saveToFirebase(deckType, cardFront, cardBack);
+                saveToFirebase(deckType, cardFront, cardBack);
 
                 mFront.setText("");
                 Intent intent = new Intent(CreateCardActivity.this, MainActivity.class);
@@ -54,32 +55,16 @@ public class  CreateCardActivity extends AppCompatActivity {
         });
     }
 
-    private void saveToFirebase(String deck, String front, String back) {
+    private void saveToFirebase(String deckType, String front, String back) {
         Card mCard = new Card(deckType, front, back);
         DatabaseReference cardRef = FirebaseDatabase
                 .getInstance()
-                .getReference(Constants.FIREBASE_CHILD_CARDS);
+                .getReference(Constants.FIREBASE_CHILD_CARDS).child(deckType);
 
         DatabaseReference pushRef = cardRef.push();
         String pushId = pushRef.getKey();
         mCard.setPushId(pushId);
         pushRef.setValue(mCard);
-//
-//        DatabaseReference deckRef = FirebaseDatabase
-//                .getInstance()
-//                .getReference(Constants.FIREBASE_CHILD_DECKS);
     }
 
-//    private void saveDeck(String deck, String front, String back) {
-//        Card mCard = new Card(deck, front, back);
-//        DatabaseReference meetupRef = FirebaseDatabase
-//                .getInstance()
-//                .getReference(Constants.FIREBASE_CHILD_DECKS);
-//
-//        DatabaseReference pushRef = meetupRef.push();
-//        String pushId = pushRef.getKey();
-//        mCard.setPushId(pushId);
-//
-//        pushRef.setValue(mCard);
-//    }
 }

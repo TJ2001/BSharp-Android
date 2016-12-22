@@ -36,6 +36,7 @@ public class DisplayCardActivity extends AppCompatActivity {
     private ArrayList<Card> mCards = new ArrayList<>();
     private int startingPosition = 0;
     private CardPagerAdapter adapterViewPager;
+    private String deckType = "ANDROID";
 
     @Bind(R.id.viewPager) ViewPager mViewPager;
 
@@ -51,14 +52,10 @@ public class DisplayCardActivity extends AppCompatActivity {
         getCardsFromFirebase();
 
         mViewPager.setPageTransformer(true, new FlipHorizontalTransformer());
-
-
-
-
     }
 
     public void getCardsFromFirebase(){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_CARDS);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_CARDS).child(deckType);
         ref.addListenerForSingleValueEvent(new ValueEventListener(){
 
             @Override
