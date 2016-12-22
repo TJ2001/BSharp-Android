@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String mDeckType;
 
     @Bind(R.id.createCardButton) Button mCreateCardButton;
-    @Bind(R.id.displayCardsButton) Button mDisplayCardsButton;
     @Bind(R.id.gridview) GridView mGridView;
 
     @Override
@@ -45,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
 
         mCreateCardButton.setOnClickListener(this);
-        mDisplayCardsButton.setOnClickListener(this);
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
 //        gridview.setAdapter(new GridViewAdapter(this));
@@ -71,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            public void onItemClick(AdapterView<?> parent, View v,
                 int position, long id) {
-                    Toast.makeText(MainActivity.this, "it's clickable" + position,
-                        Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, "it's clickable" + position,
+//                        Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(MainActivity.this, DisplayCardActivity.class);
 
                intent.putExtra("deck", mDecks.get(position).deckType);
@@ -87,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v == mCreateCardButton) {
             startActivity(new Intent(MainActivity.this, CreateCardActivity.class));
-        } else if (v == mDisplayCardsButton) {
-            startActivity(new Intent(MainActivity.this, DisplayCardActivity.class));
         }
     }
 
