@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -16,10 +15,8 @@ import android.widget.Toast;
 
 import com.example.guest.b.Constants;
 import com.example.guest.b.R;
-import com.example.guest.b.adapters.GridViewAdapter;
 import com.example.guest.b.card_ui.CreateCardActivity;
 import com.example.guest.b.card_ui.DisplayCardActivity;
-import com.example.guest.b.models.Card;
 import com.example.guest.b.models.Deck;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -50,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDisplayCardsButton.setOnClickListener(this);
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new GridViewAdapter(this));
+//        gridview.setAdapter(new GridViewAdapter(this));
 
 //        final ArrayAdapter<String> gridViewArrayAdapter = new ArrayAdapter<Deck>
 //                (this,android.R.layout.simple_list_item_1, mDecks);
@@ -63,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ImageView image = (ImageView)v.findViewById(R.id.imageView);
                 TextView name = (TextView)v.findViewById(R.id.Name);
 //
-                name.setText(model.getSubject().toString());
+                name.setText(model.getDeckType());
             }
 
         };
@@ -74,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int position, long id) {
                     Toast.makeText(MainActivity.this, "it's clickable" + position,
                         Toast.LENGTH_SHORT).show();
+               startActivity(new Intent(MainActivity.this, DisplayCardActivity.class));
             }
         });
 
