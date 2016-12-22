@@ -1,10 +1,9 @@
 package com.example.guest.b.card_ui;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -115,8 +114,8 @@ public class DisplayCardActivity extends AppCompatActivity implements FragmentMa
                 .beginTransaction()
 
                 .setCustomAnimations(
-                        R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-                        R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+                        R.anim.card_flip_right_in, R.anim.card_flip_right_out,
+                        R.anim.card_flip_left_in, R.anim.card_flip_left_out)
 
                 .replace(R.id.container, new CardBackFragment())
                 .addToBackStack(null)

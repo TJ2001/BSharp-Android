@@ -28,16 +28,16 @@ public class CardFrontFragment extends Fragment {
         return cardFrontFragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mCard = Parcels.unwrap(getArguments().getParcelable("card"));
-    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        mCard = Parcels.unwrap(getArguments().getParcelable("card"));
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mFrontCardText.setText(mCard.getFront());
+//        mFrontCardText.setText(mCard.getFront());
         return inflater.inflate(R.layout.fragment_card_front, container, false);
     }
 }
