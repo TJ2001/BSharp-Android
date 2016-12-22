@@ -36,7 +36,7 @@ public class DisplayCardActivity extends AppCompatActivity {
     private ArrayList<Card> mCards = new ArrayList<>();
     private int startingPosition = 0;
     private CardPagerAdapter adapterViewPager;
-    private String deckType = "ANDROID";
+    private String deckType;
 
     @Bind(R.id.viewPager) ViewPager mViewPager;
 
@@ -46,6 +46,9 @@ public class DisplayCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_card);
         ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        deckType = intent.getStringExtra("deck");
 
         getCardsFromFirebase();
 
@@ -100,5 +103,4 @@ public class DisplayCardActivity extends AppCompatActivity {
             }
         }
     }
-
 }
