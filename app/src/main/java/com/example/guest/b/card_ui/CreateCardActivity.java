@@ -12,8 +12,11 @@ import com.example.guest.b.R;
 import com.example.guest.b.models.Card;
 import com.example.guest.b.models.Deck;
 import com.example.guest.b.shell_ui.MainActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,6 +29,7 @@ public class  CreateCardActivity extends AppCompatActivity {
     @Bind(R.id.frontEditText) EditText mFront;
     @Bind(R.id.backEditText) EditText mBack;
     @Bind(R.id.deckEditText) EditText mDeckType;
+    private Deck mDeck;
 
 //    private ArrayList<String> cards = new ArrayList<>();
 
@@ -69,15 +73,41 @@ public class  CreateCardActivity extends AppCompatActivity {
     }
 
     private void saveDeckToFirebase(String deckType) {
-        Deck mDeck = new Deck(deckType);
+
+        mDeck = new Deck(deckType);
         DatabaseReference cardRef = FirebaseDatabase
                 .getInstance()
                 .getReference(Constants.FIREBASE_CHILD_DECKS);
 
-        DatabaseReference pushRef = cardRef.push();
-        String pushId = pushRef.getKey();
-        mDeck.setPushId(pushId);
-        pushRef.setValue(mDeck);
+        cardRef.orderByChild("deckType").equalTo(deckType).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.getValue() != null) {
+                   DatabaseReference ref = FirebaseDatabase
+                            .getInstance()
+                            .getReference(Constants.FIREBASE_CHILD_DECKS).orderByChild("deckType").equalTo(mDeck.getDeckType()).getRef();
+                    String pushKey = ref.getKey();
+                    mDeck.setPushId(pushKey);
+                    ref.setValue(mDeck);
+                } else {
+                    DatabaseReference cardRef = FirebaseDatabase
+                            .getInstance()
+                            .getReference(Constants.FIREBASE_CHILD_DECKS).child(mDeck.getDeckType());
+                    DatabaseReference pushRef = cardRef.push();
+                    String pushId = pushRef.getKey();
+                    mDeck.setPushId(pushId);
+                    pushRef.setValue(mDeck);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
     }
 
 }

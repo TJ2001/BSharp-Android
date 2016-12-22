@@ -69,14 +69,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mGridView.setAdapter(adapter);
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           public void onItemClick(AdapterView<?> parent, View v,
-                int position, long id) {
-                    Toast.makeText(MainActivity.this, "it's clickable" + position,
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Toast.makeText(MainActivity.this, "it's clickable" + position,
                         Toast.LENGTH_SHORT).show();
-               Intent intent = new Intent(MainActivity.this, DisplayCardActivity.class);
+                Intent intent = new Intent(MainActivity.this, DisplayCardActivity.class);
 
-               intent.putExtra("deck", mDecks.get(position).deckType);
-               startActivity(intent);
+                intent.putExtra("deck", mDecks.get(position).deckType);
+                startActivity(intent);
             }
         });
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getDeckFromFirebase(){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_CARDS);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_DECKS);
         ref.addListenerForSingleValueEvent(new ValueEventListener(){
 
             @Override
