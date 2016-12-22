@@ -40,8 +40,6 @@ public class DisplayCardActivity extends AppCompatActivity {
 
     @Bind(R.id.viewPager) ViewPager mViewPager;
 
-    private Card sentCard;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

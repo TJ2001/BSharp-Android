@@ -20,7 +20,6 @@
         <activity android:name=".card_ui.CreateCardActivity" />
         <activity android:name=".card_ui.DisplayCardActivity" />
         <activity android:name=".shell_ui.MainActivity" />
-        <activity android:name=".shell_ui.DeckGridActivity"></activity>
     </application>
 
 </manifest>
